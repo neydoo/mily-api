@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const passport = require("passport");
+const dotenv = require('dotenv');
+
 
 
 //routes import
@@ -29,11 +31,13 @@ app.use(passport.initialize());
 app.use('/api/products', productRouter);
 app.use('/api/auth', userRouter);
 
+dotenv.config();
+port = process.env.PORT;
 
 app.get('/', (req, res) => {
     res.send("<h1>HEYYYY</h1>");
 });
 
-app.listen(8888, () => {
-    console.log('App listening on port 8888!');
+app.listen(port, () => {
+    console.log(`App listening on port ${port}!`);
 });

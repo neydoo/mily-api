@@ -1,8 +1,16 @@
 const JWT = require("jsonwebtoken");
 const User = require("../models/userModel");
 const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 class UserController {
+
+    constructor() {
+        this.register = this.register.bind(this);
+        // this.login = this.login.bind(this);
+    }
 
     async register(req, res) {
         try {
@@ -12,11 +20,7 @@ class UserController {
             }
             const newUser = await User.create(req.body);
 
-
-            const token = JWT.sign({
-                iss: "Albert",
-                sub: newUser._id
-            }, process.env.JWT_SECRET);
+            const token = await this.signToken(newUser.id);
 
             return res.status(200).json({ "token": token });
         } catch (error) {
@@ -24,6 +28,13 @@ class UserController {
         }
 
 
+    }
+
+    signToken(id) {
+        return JWT.sign({
+            iss: "Albert",
+            sub: id
+        }, process.env.JWT_SECRET);
     }
 
 }
