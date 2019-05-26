@@ -3,6 +3,7 @@ const User = require("../models/userModel");
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const passport = require('passport');
+const checkAuth = require('../middleware/checkAuth');
 
 dotenv.config();
 
@@ -11,6 +12,8 @@ class UserController {
     constructor() {
         this.register = this.register.bind(this);
         this.login = this.login.bind(this);
+        this.secret = this.secret.bind(this);
+
     }
 
     async register(req, res) {
@@ -35,7 +38,8 @@ class UserController {
                 const token = this.signToken(user._id);
 
                 res.json({
-                    accessToken: token
+                    accessToken: token,
+
                 });
             });
 
@@ -76,7 +80,8 @@ class UserController {
     async secret(req, res, next) {
         res.json({
             message: "secret resource",
-            id: req.owner
+            id: req.user.id,
+            email: req.user.email
         });
     }
 

@@ -11,6 +11,6 @@ userRouter.post("/login", passport.authenticate('local', {
     session: false
 }), userCtrl.login);
 
-userRouter.get("/secret", checkAuth, userCtrl.secret);
+userRouter.get("/secret", passport.authenticate("jwt", { session: false }), userCtrl.secret);
 
 module.exports = userRouter;
