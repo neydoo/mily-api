@@ -26,7 +26,6 @@ mongoose.connect('mongodb://localhost:27017/shop', {
 });
 
 app.use(bodyParser.json());
-app.use(passport.initialize());
 
 //routes
 app.use('/api/products', productRouter);
