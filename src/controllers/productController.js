@@ -16,7 +16,7 @@ class ProductController {
         try {
             //get product ID
             const id = req.params.productId;
-            
+
             const product = await productModel.findById(id);
 
             const updatedProducts = await product.update(req.body);
@@ -28,16 +28,13 @@ class ProductController {
     }
 
     async deleteProduct(req, res) {
-        try {
-            //get product ID
-            const id = req.params.productId;
+        const id = req.params.productId;
 
-            const product = await productModel.findByIdAndDelete(id);
+        await productModel.findByIdAndRemove({ _id: id });
 
-            return res.status(200).json({ "message": "deleted item" });
-        } catch (error) {
-            return res.status(500).json({ "message": "server error", "error": error });
-        }
+        res.status(200).json({
+            msg: "Success"
+        });
     }
 
 }
