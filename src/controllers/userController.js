@@ -1,5 +1,5 @@
 const JWT = require("jsonwebtoken");
-const User = require("../models/userModel");
+const User = require("../models/User");
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const passport = require('passport');
